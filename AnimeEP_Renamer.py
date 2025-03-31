@@ -29,12 +29,12 @@ def sanitize_filename(filename):
 
 def extract_episode_number(filename):
     """Extract episode number from filename using regex"""
-    # Match numbers that are followed by various separators including dots
-    episode_pattern = re.compile(r'(\d{1,2})(?:[_\-\. ]|$)')
+    episode_pattern = re.compile(
+        r'(?:[Ss]?\d*[EePp](\d{1,2}))|(\d{1,2})(?:[_\-\. ]|$)')
     match = episode_pattern.search(filename)
     if match:
-        # Convert to string and zfill to ensure consistent formatting
-        return str(int(match.group(1))).zfill(2)
+        episode_number = match.group(1) or match.group(2)
+        return str(int(episode_number)).zfill(2)
     return None
 
 class EpisodeRenamer(QWidget):
